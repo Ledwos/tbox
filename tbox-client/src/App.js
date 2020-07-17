@@ -35,28 +35,13 @@ function App() {
     history.push('/tasks')
   };
 
-  // weather fetch
-  const userLoc = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(weather);
-      console.log('navigator geo location working in this browser')
-    }
-  };
-
-  const weather = (position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    console.log(`coords: ${lat}, ${lon}`);
-  };
-
-
   return (
     <div>
       {/* <p>I'm the login / signup comp</p> */}
       {/* <p onClick={dashPage}>go to dash</p> */}
     <Switch>
       <Route exact path='/' children={<Login dash={dashPage} />} />
-      <Route exact path='/dash' children={<Dash getWeather={userLoc} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
+      <Route exact path='/dash' children={<Dash news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
       <Route exact path='/News' children={<News />} />
       <Route exact path='/Photos' children={<Photos />} />
       <Route exact path='/Sport' children={<Sport />} />

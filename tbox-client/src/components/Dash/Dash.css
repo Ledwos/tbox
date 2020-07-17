@@ -30,13 +30,14 @@ body {
 }
 
 .previewHead {
-    height: 40px;
+    height: 25%;
     background-color: rgb(255, 230, 94);
-    text-align: center;
-    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 24px;
 }
 
 .previewBody {
-    height: 3fr;
+    height: 75%;
 }
