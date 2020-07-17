@@ -19,9 +19,7 @@
   },
   "homepage": "https://github.com/Ledwos/tbox#readme",
   "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
+    "express": "^4.17.1",
     "dotenv": "^8.2.0"
   }
 }
