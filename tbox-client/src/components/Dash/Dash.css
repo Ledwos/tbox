@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* background-color: rgb(52, 99, 228); */
+    text-align: center;
+}
+
+#dashGreet {
+    color: white;
+    font-size: 60px;
+    margin-top: 20px;
+}
+
+.previewDiv {
+    border: 3px solid rgb(255, 230, 94);
+    border-radius: 5px;
+    width: 270px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 30px;
+    display: inline-block;
+
+}
+
+#dashboard {
+    display: inline;
+}
+
+.previewHead {
+    height: 40px;
+    background-color: rgb(255, 230, 94);
+    text-align: center;
+    padding-top: 10px;
+    font-size: 24px;
+}
+
+.previewBody {
+    height: 3fr;
+}

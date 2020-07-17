@@ -1,1 +1,7 @@
 
+body {
+    background-image: url("./components/assets/Background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgb(143, 173, 255);
+}
