@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './Dash.css';
+import fetch from 'node-fetch';
 
 function Dash(props) {
     const [weather, setWeather] = useState(null);
+    const [newsfeed, setNewsfeed] = useState(null);
 
     useEffect(() => {
         userLoc();
+        getNews();
     }, []);
     
       // weather fetch
@@ -19,14 +22,33 @@ function Dash(props) {
   const getWeather = (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    console.log(`coords: ${lat}, ${lon}`);
+    // console.log(`coords: ${lat}, ${lon}`);
     fetch(`/api/weather/${lon}/${lat}`)
     .then(response => response.json())
     .then(data => {
         setWeather(data);
-        console.log(weather);
     });
   };
+
+    // news fetch
+    const getNews = () => {
+        fetch('/api/news')
+        .then(response => response.text())
+        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+        .then(data => {
+            let first = data.querySelector('item');
+            setNewsfeed(first);
+            console.log(first);
+        })
+    };
+
+    const newslink = () => {
+        let url = newsfeed.querySelector('link').innerHTML;
+        let url_key  = url.search("news") + 5;
+        url = url.slice(url_key)
+        // console.log(url);
+        props.newsurl(url);
+    }
 
     return (
         <div>
@@ -42,11 +64,14 @@ function Dash(props) {
                         <p id='weatherTemp'>{weather ? weather.name : null}</p>
                     </div>
                 </div>
-                <div className='previewDiv' onClick={props.news}>
+                <div className='previewDiv' onClick={newslink}>
                     <div className='previewHead'>
                         <p>News</p>
                     </div>
-                    <div className='previewBody'></div>
+                    <div className='previewBody'>
+                        <h4 id='newsHeading'>{newsfeed ? newsfeed.querySelector('title').innerHTML.trim().replace(/^(\/\/\s*)?<!\[CDATA\[|(\/\/\s*)?\]\]>$/g, '') : null}</h4>
+                        <p id='newsDesc'>{newsfeed ? newsfeed.querySelector('description').innerHTML.trim().replace(/^(\/\/\s*)?<!\[CDATA\[|(\/\/\s*)?\]\]>$/g, '') : null}</p>
+                    </div>
                 </div>
                 <div className='previewDiv' onClick={props.sport}>
                     <div className='previewHead'>

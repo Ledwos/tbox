@@ -13,6 +13,7 @@ app.use(cors())
 // production static route
 app.use(express.static(path.join(__dirname, 'tbox-client/buid')));
 
+//  weather fetch
 app.get('/api/weather/:lon/:lat', (req,res) => {
     let lon = req.params.lon;
     let lat = req.params.lat;
@@ -21,6 +22,22 @@ app.get('/api/weather/:lon/:lat', (req,res) => {
         .then(data => res.json(data));
     console.log(`weather api called! location: ${lon}, ${lat}`);
   });
+
+// news fetch
+app.get('/api/news', (req,res) => {
+    fetch('http://feeds.bbci.co.uk/news/rss.xml')
+    .then(response => response.text())
+    // .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
+    .then(data => res.send(data));
+});
+
+// article fetch
+app.get('/api/scrape/:url', (req, res) => {
+    let url = req.params.url;
+    fetch(`https://www.bbc.co.uk/news/${url}`)
+    .then(data => data.text())
+    .then(response => res.send(response));
+});
 
 // test route
 app.get('/test', (req, res) => {

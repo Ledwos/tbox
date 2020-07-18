@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Switch,
   Route,
   useHistory,
-  Redirect
+  // Redirect
 } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login/Login.js';
@@ -15,6 +15,8 @@ import Tasks from './components/Tasks/Tasks.js';
 
 
 function App() {
+
+  const [nurl, setNurl] = useState('');
 
   // routing
   let history = useHistory();
@@ -35,14 +37,20 @@ function App() {
     history.push('/tasks')
   };
 
+  const newsurl = (url) => {
+    setNurl(url);
+    newsPage();
+    // console.log(url);
+}
+
   return (
     <div>
       {/* <p>I'm the login / signup comp</p> */}
       {/* <p onClick={dashPage}>go to dash</p> */}
     <Switch>
       <Route exact path='/' children={<Login dash={dashPage} />} />
-      <Route exact path='/dash' children={<Dash news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
-      <Route exact path='/News' children={<News />} />
+      <Route exact path='/dash' children={<Dash newsurl={newsurl} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
+      <Route exact path='/News' children={<News nurl={nurl} />} />
       <Route exact path='/Photos' children={<Photos />} />
       <Route exact path='/Sport' children={<Sport />} />
       <Route exact path='/Tasks' children={<Tasks />} />
