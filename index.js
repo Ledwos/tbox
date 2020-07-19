@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors())
 // production static route
-app.use(express.static(path.join(__dirname, 'tbox-client/buid')));
+app.use(express.static(path.join(__dirname, 'tbox-client/build')));
 
 //  weather fetch
 app.get('/api/weather/:lon/:lat', (req,res) => {
