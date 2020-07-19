@@ -13,6 +13,28 @@ app.use(cors())
 // production static route
 app.use(express.static(path.join(__dirname, 'tbox-client/build')));
 
+// Database
+
+const knex = require('knex');
+const pg = require('knex')(({
+    client: 'pg',
+    connection: process.env.DATABASE_URL
+}))
+
+// const pg = require('pg');
+// const client = new pg.Client(process.env.DATABASE_URL);
+// client.connect();
+
+app.get('/db/test', (req,res) => {
+    pg.from('u_table')
+    .select('u_name').where('u_email', 'jess@itworks.com')
+    .then(data => res.send(`Hi ${data[0].u_name}`));
+});
+
+
+
+// API routes
+
 //  weather fetch
 app.get('/api/weather/:lon/:lat', (req,res) => {
     let lon = req.params.lon;
