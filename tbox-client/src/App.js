@@ -115,7 +115,7 @@ function App() {
   return (
     <div>
     <Switch>
-      <Route exact path='/' children={loggedIn == 'true' ? <Redirect to='/dash' /> : <Home handleLogin={handleLogin} errTxt={errTxt}/> } />
+      <Route exact path='/' children={loggedIn == 'true' ? <Redirect to='/dash' /> : <Home handleLogin={handleLogin} errTxt={errTxt} dashPage={dashPage}/> } />
       <Route exact path='/dash' children={<Dash logout={logOut} uname={uname} newsurl={newsurl} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
       <Route exact path='/News' children={<News nurl={nurl} />} />
       <Route exact path='/Photos' children={<Photos />} />
