@@ -38,7 +38,7 @@ function Dash(props) {
         .then(data => {
             let first = data.querySelector('item');
             setNewsfeed(first);
-            console.log(first);
+            // console.log(first);
         })
     };
 
@@ -52,7 +52,8 @@ function Dash(props) {
 
     return (
         <div>
-            <h2 id='dashGreet'>Good day [name]</h2>
+            <h2 id='dashGreet'>Good day {props.uname}</h2>
+            <button onClick={props.logout}>logout</button><br/>
             <div id='dashboard'>
                 <div className='previewDiv'>
                     <div className='previewHead'>

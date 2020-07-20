@@ -27,18 +27,36 @@ const pg = require('knex')(({
 // const client = new pg.Client(process.env.DATABASE_URL);
 // client.connect();
 
+// DELETE THIS ONE
+// app.post('/db/test', (req, res) => {
+//     let email = req.body.email;
+//     let pass = req.body.pass;
+//     res.json({
+//         'email': email,
+//         'pass': pass
+//     });
+// });
+
+
 // login
 app.post('/db/login', (req,res) => {
     let email = req.body.email;
     let pass = req.body.pass;
+    console.log(`call for ${email}!`);
     pg.from('u_table')
-    .select('u_name').where({
+    .select('u_name', 'u_id').where({
         u_email : `${email}`,
         u_pass : `${pass}`
     })
-    .then(data => res.send(data[0].u_name))
+    .then(data => res.json({
+        'name': data[0].u_name,
+        'uid': data[0].u_id
+        })
+    )
     .catch(err => {
-        res.status(400).send({'error': 'please check your login details'});
+        res.status(400).json({
+            'error': 'please check your login details'
+        });
         // throw err;
     });
 });
@@ -106,7 +124,6 @@ app.post('/db/comp', (req,res) => {
     .where({t_id: `${tid}`})
     .select('t_comp')
     .then(data => {
-        // let comp = !data[0].t_comp;
         pg('t_table')
         .where({t_id: `${tid}`})
         .update({t_comp: !data[0].t_comp})
