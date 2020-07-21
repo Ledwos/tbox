@@ -7,10 +7,12 @@ function Dash(props) {
     const [newsfeed, setNewsfeed] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [sports, setSports] = useState([]);
+    const [pieData, setpieData] = useState([]);
 
     useEffect(() => {
         userLoc();
         getNews();
+        getClothes();
         props.getSportData('Milan');
     }, []);
 
@@ -21,6 +23,10 @@ function Dash(props) {
     useEffect(() => {
         sportHeadline();
     }, [props.futbol]);
+
+    useEffect(() => {
+        makePie();
+    }, [pieData]);
 
     const sportHeadline = () => {
         let limit = props.futbol.length
@@ -77,6 +83,57 @@ function Dash(props) {
             setTasks(top3);
         });
     };
+
+    // clothes fetch
+    const getClothes = () => {
+        fetch('/api/clothes')
+        .then(response => response.json())
+        .then(info => setpieData(info));
+    };
+
+    // build piechart
+    const makePie = () => {
+        let itemCount = Object.values(pieData);
+        const reducer = (a, b) => a + b;
+        let total = itemCount.reduce(reducer, 0);
+
+        // prep data for plot - generate angles
+        let itemAngles = itemCount.map(x => (2 * Math.PI * x) / total);
+        // colours for chart
+        const col = ['#25b04c', '#b03525', '#ebd61e', '#3642c7', '#b82abf', '#15bbd1'];
+        // draw chart
+        let startAngle = 0;
+        let endAngle = 0;
+        let canvas = document.getElementById('pie');
+        let ctx = canvas.getContext('2d');
+        for(let x = 0; x < itemAngles.length; x++) {
+            startAngle = endAngle;
+            endAngle = endAngle + itemAngles[x];
+            ctx.beginPath();
+            ctx.fillStyle = col[x];
+            ctx.moveTo(100, 90);
+            ctx.arc(100, 90, 50, startAngle, endAngle);
+            ctx.lineTo(100, 90);
+            ctx.stroke();
+            ctx.fill();
+        };
+        pieInfo();
+    };
+
+    // make piechart key
+    const pieInfo = () => {
+        let items = Object.keys(pieData);
+        const col = ['#25b04c', '#b03525', '#ebd61e', '#3642c7', '#b82abf', '#15bbd1'];
+        let itemList = document.createElement('ul');
+        for (let x = 0; x < items.length; x++){
+            let itemName = document.createElement('li');
+            itemName.style.color = col[x];
+            itemName.innerHTML = items[x];
+            itemList.innerHTML += itemName.outerHTML;
+        };
+        document.getElementById('pKey').appendChild(itemList);
+    };
+
 
     return (
         <div>
@@ -139,7 +196,10 @@ function Dash(props) {
                     <div className='previewHead'>
                         <p>Clothes</p>
                     </div>
-                    <div className='previewBody'></div>
+                    <div className='previewBody'>
+                        <canvas id='pie'></canvas>
+                        <div id='pKey'></div>
+                    </div>
                 </div>
             </div>
         </div>

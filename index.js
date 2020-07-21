@@ -204,6 +204,25 @@ app.get('/api/sports/:team', (req,res) => {
     res.json(result);
 });
 
+// chlothes data
+app.get('/api/clothes', (req, res) => {
+    fetch('https://therapy-box.co.uk/hackathon/clothing-api.php?username=swapnil')
+    .then(response => response.json())
+    .then(data => {
+        console.log('clothes called!');
+        let sumArr = {};
+        let items = data.payload;
+        let distinct = [... new Set(items.map(x => x.clothe))];
+        for (x = 0; x < distinct.length; x++) {
+            let arr = items.filter(item => item.clothe == distinct[x]);
+            sumArr[distinct[x]] = arr.length;
+        };
+        return sumArr
+    })
+    .then(clothes => res.json(clothes));
+});
+
+
 // test route
 app.get('/test', (req, res) => {
     res.send(`dash home, ${process.env.TEST_VAR || 'env file not here, nice!'}`);
