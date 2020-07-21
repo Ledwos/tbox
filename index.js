@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const fetch = require('node-fetch');
+const csv = require('csv-parser');
+const fs = require('fs');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -16,8 +18,6 @@ app.use(express.static(path.join(__dirname, 'tbox-client/build')));
 app.use(express.json());
 
 // Database
-
-const knex = require('knex');
 const pg = require('knex')(({
     client: 'pg',
     connection: process.env.DATABASE_URL
@@ -26,16 +26,6 @@ const pg = require('knex')(({
 // const pg = require('pg');
 // const client = new pg.Client(process.env.DATABASE_URL);
 // client.connect();
-
-// DELETE THIS ONE
-// app.post('/db/test', (req, res) => {
-//     let email = req.body.email;
-//     let pass = req.body.pass;
-//     res.json({
-//         'email': email,
-//         'pass': pass
-//     });
-// });
 
 
 // login
@@ -135,7 +125,20 @@ app.post('/db/comp', (req,res) => {
     });
 })
 
-
+// get tasks
+app.get('/db/tasks/:uid', (req,res) => {
+    let uid = req.params.uid;
+    pg('t_table')
+    .where({t_user: `${uid}`})
+    .select('t_name', 't_desc', 't_id', 't_comp')
+    .then(data => {
+        if (data.length === 0) {
+            res.status(404).send({'error': 'no tasks found'});
+        } else {
+            res.json(data);
+        }
+    });
+});
 
 
 
@@ -165,6 +168,40 @@ app.get('/api/scrape/:url', (req, res) => {
     fetch(`https://www.bbc.co.uk/news/${url}`)
     .then(data => data.text())
     .then(response => res.send(response));
+});
+
+// sports data
+const data = [];
+fs.createReadStream('I1.csv')
+    .pipe(csv())
+    .on('data', row => data.push(row))
+    .on('end', () => {
+        console.log('Sports data ready!');
+    });
+
+app.get('/api/sports/:team', (req,res) => {
+    const team = req.params.team.charAt(0).toUpperCase() + req.params.team.slice(1);
+    let result = [];
+    for (x = 0; x < data.length; x++) {
+        if (data[x].HomeTeam == team ) {
+            if (data[x].FTHG > data[x].FTAG){
+                result.push({
+                    'team': data[x].AwayTeam,
+                    'score': `${data[x].FTHG} : ${data[x].FTAG}`
+                });
+            }
+        } else if (data[x].AwayTeam == team) {
+            if (data[x].FTAG > data[x].FTHG){
+                result.push(
+                    {
+                        'team': data[x].HomeTeam,
+                        'score': `${data[x].FTAG} : ${data[x].FTHG}`
+                    }
+                );
+            }
+        }
+    };
+    res.json(result);
 });
 
 // test route

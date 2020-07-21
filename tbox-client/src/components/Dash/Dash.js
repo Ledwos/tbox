@@ -5,11 +5,28 @@ import fetch from 'node-fetch';
 function Dash(props) {
     const [weather, setWeather] = useState(null);
     const [newsfeed, setNewsfeed] = useState(null);
+    const [tasks, setTasks] = useState([]);
+    const [sports, setSports] = useState([]);
 
     useEffect(() => {
         userLoc();
         getNews();
+        props.getSportData('Milan');
     }, []);
+
+    useEffect(() => {
+        getTasks();
+    }, [props.uid]);
+
+    useEffect(() => {
+        sportHeadline();
+    }, [props.futbol]);
+
+    const sportHeadline = () => {
+        let limit = props.futbol.length
+        let match = Math.floor(Math.random() * limit);
+        setSports(props.futbol[match]);
+    };
     
       // weather fetch
   const userLoc = () => {
@@ -50,6 +67,17 @@ function Dash(props) {
         props.newsurl(url);
     }
 
+    // task fetch
+    const getTasks = () => {
+        fetch(`db/tasks/${props.uid}`)
+        .then(res => res.json())
+        .then(data => {
+            data = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id));
+            let top3 = data.filter(item => item.t_id < 4);
+            setTasks(top3);
+        });
+    };
+
     return (
         <div>
             <h2 id='dashGreet'>Good day {props.uname}</h2>
@@ -78,7 +106,11 @@ function Dash(props) {
                     <div className='previewHead'>
                         <p>Sport</p>
                     </div>
-                    <div className='previewBody'></div>
+                    <div className='previewBody'>
+                        {sports ? [
+                            <p>Wow! Milan beat {sports.team} {sports.score}!</p>
+                        ] : null}
+                    </div>
                 </div>
                 <div className='previewDiv' onClick={props.photos}>
                     <div className='previewHead'>
@@ -90,7 +122,18 @@ function Dash(props) {
                     <div className='previewHead'>
                         <p>Tasks</p>
                     </div>
-                    <div className='previewBody'></div>
+                    <div className='previewBody'>
+                        {tasks.length > 0 ? [
+                        tasks.map(task => (
+                        <div key={task.t_id} className='task'>
+                            <div className='taskHeader'>
+                                <h4 className='taskTitle'>{task.t_name}</h4>
+                                <input type='checkbox' defaultChecked={task.t_comp}></input>
+                            </div>
+                        </div>
+                        ))] : <p>No tasks set</p>
+                        }
+                    </div>
                 </div>
                 <div className='previewDiv'>
                     <div className='previewHead'>

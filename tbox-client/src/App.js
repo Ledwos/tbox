@@ -23,6 +23,7 @@ function App() {
   const [uname, setuname] = useState('');
   const [uid, setuid] = useState('');
   const [errTxt, seterrTxt] = useState(false);
+  const [futbol, setFutbol] = useState([]);
 
   useEffect(() => {
     logState();
@@ -60,11 +61,11 @@ function App() {
     const logStatus = localStorage.getItem('loggedIn');
     const uId = localStorage.getItem('uId');
     const uName = localStorage.getItem('uName');
-    console.dir({
-      "status": logStatus,
-      "id": uId,
-      "name": uName
-    });
+    // console.dir({
+    //   "status": logStatus,
+    //   "id": uId,
+    //   "name": uName
+    // });
     setloggedIn(logStatus);
     setuid(uId);
     setuname(uName);
@@ -112,15 +113,29 @@ function App() {
     })
   };
 
+  // get sport data
+  const getSportData = (teamName) => {
+    // let team = teamName
+    fetch(`api/sports/${teamName}`)
+    .then(response => {
+        if (response.status === 200) {
+            response.json()
+            .then(data => setFutbol(data));
+        } else if (response.status === 404) {
+            console.log('no team with that name');
+        };
+    });
+};
+
   return (
     <div>
     <Switch>
       <Route exact path='/' children={loggedIn == 'true' ? <Redirect to='/dash' /> : <Home handleLogin={handleLogin} errTxt={errTxt} dashPage={dashPage}/> } />
-      <Route exact path='/dash' children={<Dash logout={logOut} uname={uname} newsurl={newsurl} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
+      <Route exact path='/dash' children={<Dash futbol={futbol} getSportData={getSportData} logout={logOut} uid={uid} uname={uname} newsurl={newsurl} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
       <Route exact path='/News' children={<News nurl={nurl} />} />
       <Route exact path='/Photos' children={<Photos />} />
-      <Route exact path='/Sport' children={<Sport />} />
-      <Route exact path='/Tasks' children={<Tasks />} />
+      <Route exact path='/Sport' children={<Sport futbol={futbol} getSportData={getSportData} />} />
+      <Route exact path='/Tasks' children={<Tasks uid={uid}/>} />
     </Switch>
     </div>
   );
