@@ -47,7 +47,6 @@ function Dash(props) {
   const getWeather = (position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    // console.log(`coords: ${lat}, ${lon}`);
     fetch(`/api/weather/${lon}/${lat}`)
     .then(response => response.json())
     .then(data => {
@@ -111,7 +110,7 @@ function Dash(props) {
         // prep data for plot - generate angles
         let itemAngles = itemCount.map(x => (2 * Math.PI * x) / total);
         // colours for chart
-        const col = ['#25b04c', '#b03525', '#ebd61e', '#3642c7', '#b82abf', '#15bbd1'];
+        const col = ['#25b04c', '#b03525', '#c9a308', '#3642c7', '#b82abf', '#15bbd1'];
         // draw chart
         let startAngle = 0;
         let endAngle = 0;
@@ -122,9 +121,9 @@ function Dash(props) {
             endAngle = endAngle + itemAngles[x];
             ctx.beginPath();
             ctx.fillStyle = col[x];
-            ctx.moveTo(100, 90);
-            ctx.arc(100, 90, 50, startAngle, endAngle);
-            ctx.lineTo(100, 90);
+            ctx.moveTo(110, 80);
+            ctx.arc(110, 80, 70, startAngle, endAngle);
+            ctx.lineTo(110, 80);
             ctx.stroke();
             ctx.fill();
         };
@@ -134,7 +133,7 @@ function Dash(props) {
     // make piechart key
     const pieInfo = () => {
         let items = Object.keys(pieData);
-        const col = ['#25b04c', '#b03525', '#ebd61e', '#3642c7', '#b82abf', '#15bbd1'];
+        const col = ['#25b04c', '#b03525', '#c9a308', '#3642c7', '#b82abf', '#15bbd1'];
         let itemList = document.createElement('ul');
         for (let x = 0; x < items.length; x++){
             let itemName = document.createElement('li');
@@ -149,18 +148,34 @@ function Dash(props) {
 
 
     return (
-        <div>
-            <h2 id='dashGreet'>Good day {props.uname}</h2>
-            <button onClick={props.logout}>logout</button><br/>
+        <div id='dashMain'>
+            <div id='dashHead'>
+                <h2 id='dashGreet'>Good day {props.uname}</h2>
+                <button onClick={props.logout} id='logoutBtn'>Log out</button><br/>
+            </div>
             <div id='dashboard'>
                 <div className='previewDiv'>
                     <div className='previewHead'>
                         <p>Weather</p>
                     </div>
                     <div className='previewBody'>
-                        <img id='weatherImg' src={weather ? `http://openweathermap.org/img/w/${weather.weather[0].icon}.png` : null} alt='weather icon'></img>
-                        <p id='weatherLoc'>{weather ? weather.main.temp : null} °C</p>
-                        <p id='weatherTemp'>{weather ? weather.name : null}</p>
+                        <table id='wTable'>
+                            <tbody>
+                                <tr>
+                                    <td class='wR1'>
+                                        <img id='wImg' src={weather ? `http://openweathermap.org/img/w/${weather.weather[0].icon}.png` : null} alt='weather icon'></img>
+                                    </td>
+                                    <td class='wR1'>
+                                        <p id='weatherLoc'>{weather ? weather.main.temp : null} °C</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td id='wR2' colSpan='2'>
+                                        {weather ? weather.name : null}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div className='previewDiv' onClick={newslink}>
@@ -178,8 +193,9 @@ function Dash(props) {
                     </div>
                     <div className='previewBody'>
                         {sports ? [
-                            <p>Wow! Milan beat {sports.team} {sports.score}!</p>
+                            <p id='sportBody'>Wow! Milan beat {sports.team} {sports.score}!</p>
                         ] : null}
+                        <p>(click for more stats!)</p>
                     </div>
                 </div>
                 <div className='previewDiv' onClick={props.photos}>
@@ -187,27 +203,33 @@ function Dash(props) {
                         <p>Photos</p>
                     </div>
                     <div className='previewBody'>
-                    {photos.length > 0 ? [
-                    photos.map(photo => (
-                        <div key={photo.p_id} id={photo.p_id}>
-                        <img src={`${photo.p_img}`} alt='photo'/>
+                        <div id='photoMain'>
+                            {photos.length > 0 ? [
+                            photos.map(photo => (
+                                <div key={photo.p_id} id={photo.p_id} className='photoBox' >
+                                <img src={`${photo.p_img}`} alt='photo' className='photoPreview' />
+                                </div>
+                            ))
+                        ] : <p>No photos found</p>}
                         </div>
-                    ))
-                ] : <p>No photos found</p>}
                     </div>
                 </div>
                 <div className='previewDiv' onClick={props.tasks}>
                     <div className='previewHead'>
                         <p>Tasks</p>
                     </div>
-                    <div className='previewBody'>
+                    <div className='previewBody' id='taskMain'>
                         {tasks.length > 0 ? [
                         tasks.map(task => (
-                        <div key={task.t_id} className='task'>
-                            <div className='taskHeader'>
-                                <h4 className='taskTitle'>{task.t_name}</h4>
-                                <input type='checkbox' defaultChecked={task.t_comp}></input>
+                        <div key={task.t_id} className='taskDiv'>
+                            <div className='taskHeader' key={task.t_id}>
+                                <p className='taskTitle'>{task.t_name}</p>
+                                <div className='taskLine'></div>
                             </div>
+                                <label className='checkLabel'>
+                                    <input type='checkbox' defaultChecked={task.t_comp} class='taskCheckbox'></input>
+                                    <span class='checkMark'></span>
+                                </label>
                         </div>
                         ))] : <p>No tasks set</p>
                         }
@@ -217,7 +239,7 @@ function Dash(props) {
                     <div className='previewHead'>
                         <p>Clothes</p>
                     </div>
-                    <div className='previewBody'>
+                    <div className='previewBody' id='pieMain'>
                         <canvas id='pie'></canvas>
                         <div id='pKey'></div>
                     </div>

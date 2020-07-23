@@ -3,15 +3,38 @@
     padding: 0;
 }
 
-body {
+#dashMain {
     /* background-color: rgb(52, 99, 228); */
     text-align: center;
+}
+
+#dashHead {
+    width: 80%;
+    margin-top: 5vh;
+    display: inline-block;
+    position: relative;
 }
 
 #dashGreet {
     color: white;
     font-size: 60px;
     margin-top: 20px;
+}
+
+#logoutBtn {
+    width: 110px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(255, 230, 94);;
+    background-color: rgb(255, 230, 94);
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#logoutBtn:hover {
+    background-color: rgb(255, 255, 255);
 }
 
 .previewDiv {
@@ -22,11 +45,14 @@ body {
     background-color: rgba(255, 255, 255, 0.5);
     margin: 30px;
     display: inline-block;
+    overflow: hidden;
 
 }
 
 #dashboard {
-    display: inline;
+    display: inline-block;
+    height: 70%;
+    width: 80%;
 }
 
 .previewHead {
@@ -40,4 +66,165 @@ body {
 
 .previewBody {
     height: 75%;
+}
+
+/* Weather */
+
+#wTable {
+    width: 100%;
+    height: 100%;
+}
+
+.wR1 {
+    height: 60%;
+    font-size: 25px;
+}
+
+#wImg {
+    height: 100%;
+    width: auto;
+}
+
+#wR2 {
+    width: 100%;
+    font-size: 30px;
+    vertical-align: text-top;   
+}
+
+/* News */
+
+#newsHeading, #newsDesc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    height: 50%;
+}
+
+/* Sport */
+
+#sportBody {
+    font-size: 25px;
+    height: 65%;
+    margin-top: 20px;
+}
+
+/* Photos */
+
+#photoMain {
+    height: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: space-around;
+}
+
+.photoBox {
+    width: 40%;
+    height: 40%;
+}
+
+.photoPreview {
+    border: 2px solid rgb(255, 230, 94);
+    height: 100%;
+    width: 100%;
+}
+
+/* Tasks */
+
+#taskMain {
+    padding-top: 5px;
+    height: 65%;
+}
+
+.taskDiv {
+    display: inline-flex;
+    width: 90%;
+    height: 25%;
+    margin-top: 5px;
+}
+
+.taskHeader {
+    width: 80%;
+    text-align: left;
+}
+
+.taskLine {
+    border: 1px solid black;
+}
+
+.taskCheckbox {
+    font-size: 20px;
+}
+
+.checkLabel input {
+    opacity: 0%;
+}
+
+.checkLabel {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkMark {
+    position: absolute;
+    right: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border: 2px solid rgb(255, 230, 94);
+}
+
+.checkMark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* .checkLabel input:checked ~ .checkMark {
+    background-color: #2196F3;
+  } */
+
+.checkLabel input:checked ~ .checkMark:after {
+    display: block;
+}
+
+.checkLabel .checkMark:after {
+    right: 0px;
+    top: -10px;
+    width: 7px;
+    height: 25px;
+    border: solid rgb(0, 0, 0);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* Pie chart */
+
+#pieMain {
+    position: relative;
+}
+
+#pie {
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    width: 100%;
+}
+
+#pKey {
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    right: 5px;
 }
