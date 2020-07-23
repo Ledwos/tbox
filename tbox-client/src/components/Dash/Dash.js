@@ -54,26 +54,6 @@ function Dash(props) {
     });
   };
 
-    // news fetch
-    // const getNews = () => {
-    //     fetch('/api/news')
-    //     .then(response => response.text())
-    //     .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-    //     .then(data => {
-    //         let first = data.querySelector('item');
-    //         setNewsfeed(first);
-    //         // console.log(first);
-    //     })
-    // };
-
-    const newslink = () => {
-        let url = newsfeed.querySelector('link').innerHTML;
-        let url_key  = url.search("news") + 5;
-        url = url.slice(url_key)
-        // console.log(url);
-        props.newsurl(url);
-    }
-
     // task fetch
     const getTasks = () => {
         fetch(`db/tasks/${props.uid}`)
@@ -91,7 +71,10 @@ function Dash(props) {
     const getPhotos = () => {
         fetch(`/db/photos/fetch/${props.uid}`)
         .then(response => response.json())
-        .then(info => setPhoto(info));
+        .then(info => {
+            let newset = info.slice(0,4);
+            setPhoto(newset)
+        });
     };
 
     // clothes fetch

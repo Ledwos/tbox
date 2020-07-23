@@ -89,7 +89,8 @@ const Photos = (props) => {
 
     // delete photo
     const delPhoto = (e) => {
-        let pid = e.target.id;
+        let btnid = e.target.id;
+        let pid = btnid.slice(3);
         console.log(pid);
         fetch(`/db/photos/del/${pid}`)
         .then(response => {
@@ -104,23 +105,23 @@ const Photos = (props) => {
 
 
     return (
-        <div>
-            <p>I'm the photos component</p>
-            <div>
-                {photos.length > 0 ? [
-                    photos.map(photo => (
-                        <div key={photo.p_id} id={photo.p_id}>
-                        <img src={`${photo.p_img}`} alt='photo'/>
-                        <p id={photo.p_id} onClick={delPhoto}>X</p>
-                        </div>
-                    ))
-                ] : null}
+        <div id='photoComp' >
+            <h1 id='photosTitle' onClick={props.dashPage} >Photos</h1>
+            <div id='photoBoard' >
                 <div id='fileDiv'>
                     <label htmlFor='inputPhoto' id='customUpload'>
-                        <img id='plusPreview' src={Plus}></img>
+                        <img id='plusPreview' src={Plus} ></img>
                     </label>
                     <input type='file' id='inputPhoto' onChange={prepFile}></input>
                 </div>
+                {photos.length > 0 ? [
+                    photos.map(photo => (
+                        <div key={`p${photo.p_id}`} id={photo.p_id} className='imgDiv'>
+                            <img src={`${photo.p_img}`} alt='photo' className='imgStyle'/>
+                            <p id={`btn${photo.p_id}`} onClick={delPhoto} class='photoDelBtn' >X</p>
+                        </div>
+                    ))
+                ] : null}
             </div> 
         </div>
     );

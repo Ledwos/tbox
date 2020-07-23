@@ -1,11 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#photoComp {
+    text-align: center;
+}
+
+#photosTitle {
+    color: white;
+    font-size: 60px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+#photoBoard {
+    display: inline-flex;
+    /* height: 70%; */
+    flex-wrap: wrap;
+    width: 80%;
+    /* border: 2px solid blue; */
+}
+
 input[type='file'] {
     display:none;
 }
 
 #customUpload {
-    border: 1px solid #ccc;
     display: inline-block;
-    padding: 6px 12px;
     cursor: pointer;
-    background-color: rgba(128, 128, 128, 0.5);
+    border: 3px solid rgb(255, 230, 94);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+}
+
+.imgStyle {
+    border: 3px solid rgb(255, 230, 94);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+
+}
+
+.imgDiv {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+}
+
+.photoDelBtn {
+    cursor: pointer;
+    color: white;
+    border: 2px solid rgb(255, 230, 94);
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    right: -32px;
+}
+
+.photoDelBtn:hover {
+    background-color: rgb(255, 230, 94);
+    color: black;
+}
+
+#plusPreview {
+    height: 100px;
+    padding-top: 25%;
 }

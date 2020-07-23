@@ -21,7 +21,7 @@ const Sport = (props) => {
 
     return (
         <div id='sportComp'>
-           <h1 id='pageTitle'>Sport</h1>
+           <h1 id='pageTitle' onClick={props.dashPage} >Sport</h1>
            <div id='teamInputDiv'>
                 <input type='text' placeholder='Input team name' onChange={handleChange} id='teamInput'></input> 
                 <div id='inputLine'></div>
