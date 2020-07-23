@@ -1,0 +1,52 @@
+#taskFormDiv {
+    margin-top: 20px;
+}
+
+#closeFormBtn {
+    cursor: pointer;
+    border: 2px solid rgb(255, 230, 94);
+    border-radius: 5px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    /* color: white; */
+    margin: 5px;
+    background-color: white;
+}
+
+#closeFormBtn:hover {
+    color: black;
+    background-color: rgb(255, 230, 94);
+}
+
+#taskForm {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    color: white;
+}
+
+#taskForm label {
+    font-size: 20px;
+}
+
+#taskForm input, textarea {
+    background: none;
+    margin-top: 10px;
+    line-height: 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+}
+
+#addTaskBtn {
+    width: 120px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(255, 230, 94);
+    cursor: pointer;
+}
+
+#addTaskBtn:hover {
+    background-color: rgb(255, 230, 94);
+}

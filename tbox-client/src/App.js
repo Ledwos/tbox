@@ -155,7 +155,7 @@ function App() {
       <Route exact path='/News' children={<News getNews={getNews} nurl={nurl} dashPage={dashPage} />} />
       <Route exact path='/Photos' children={<Photos uid={uid} dashPage={dashPage} />} />
       <Route exact path='/Sport' children={<Sport futbol={futbol} getSportData={getSportData} dashPage={dashPage} />} />
-      <Route exact path='/Tasks' children={<Tasks uid={uid}/>} />
+      <Route exact path='/Tasks' children={<Tasks dashPage={dashPage} uid={uid}/>} />
     </Switch>
     </div>
   );

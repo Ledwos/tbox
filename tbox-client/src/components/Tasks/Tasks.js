@@ -153,11 +153,12 @@ const Tasks = (props) => {
 
     return (
         <div id='taskComp'>
-            <p>I'm the task comp. Your id is- {props.uid}</p>
+            <h1 id='pageTitle' onclick={props.dashPage} >Tasks</h1>
             <div id='taskDiv'>
                 {tasks.length > 0 ? [
                     tasks.map(task => (
                     <div key={`t${task.t_id}`} className='task' id={`task${task.t_id}`}>
+                        <div className='taskText'>
                         <div className='taskHeader'>
                             <h4 className='taskTitle'>{task.t_name}</h4>
                         </div>
@@ -165,14 +166,18 @@ const Tasks = (props) => {
                                 <p className='taskDesc' id={`desc${task.t_id}`} onClick={(e) => {updateDesc(e)}}>
                                     {task.t_desc}
                                 </p>
-                                <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp}></input>
                             </div>
-                        <br />
+                            <div className='taskLine' ></div>
+                        </div>
+                        <label className='checkLabel'>
+                            <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp} class='taskCheckbox'></input>
+                            <span class='checkMark'></span>
+                        </label>
                     </div>
                     ))] : <p>No tasks set</p>
                 }
+                {tform  ? <TaskForm toggleTaskForm={toggleTaskForm} addTask={addTask}/> : <img onClick={toggleTaskForm} src={addBtn} id='formBtn'></img> }
             </div>
-            {tform  ? <TaskForm toggleTaskForm={toggleTaskForm} addTask={addTask}/> : <img onClick={toggleTaskForm} src={addBtn} id='formBtn'></img> }
         </div>
     );
 };

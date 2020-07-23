@@ -1,9 +1,10 @@
 import React from 'react';
+import './TaskForm.css';
 
 const TaskForm = (props) => {
     return (
-        <div>
-            <p onClick={props.toggleTaskForm} >X</p>
+        <div id='taskFormDiv' >
+            <p onClick={props.toggleTaskForm} id='closeFormBtn' >X</p>
             <form onSubmit={props.addTask} method='POST' id='taskForm'>
                 <label for='tname' className='txtLabels'>Task Name:</label>
                 <input type='text' id='tname' placeholder='Save the world' required></input>
