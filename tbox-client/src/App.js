@@ -24,6 +24,7 @@ function App() {
   const [uid, setuid] = useState('');
   const [errTxt, seterrTxt] = useState(false);
   const [futbol, setFutbol] = useState([]);
+  const [newsfeed, setNewsfeed] = useState(null);
 
   useEffect(() => {
     logState();
@@ -51,8 +52,8 @@ function App() {
     history.push('/');
   };
 
-  const newsurl = (url) => {
-    setNurl(url);
+  const newsurl = () => {
+    // setNurl(url);
     newsPage();
     // console.log(url);
   }
@@ -112,6 +113,26 @@ function App() {
     })
   };
 
+  // news fetch
+  const getNews = () => {
+    fetch('/api/news')
+    .then(response => response.text())
+    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    .then(data => {
+        let first = data.querySelector('item');
+        setNewsfeed(first);
+        newslink(first)
+        // console.log(first);
+    })
+  };
+
+  const newslink = (site) => {
+    let url = site.querySelector('link').innerHTML;
+    let url_key  = url.search("news") + 5;
+    url = url.slice(url_key);
+    setNurl(url);
+  };
+
   // get sport data
   const getSportData = (teamName) => {
     // let team = teamName
@@ -130,8 +151,8 @@ function App() {
     <div>
     <Switch>
       <Route exact path='/' children={loggedIn == 'true' ? <Redirect to='/dash' /> : <Home handleLogin={handleLogin} errTxt={errTxt} dashPage={dashPage}/> } />
-      <Route exact path='/dash' children={<Dash futbol={futbol} getSportData={getSportData} logout={logOut} uid={uid} uname={uname} newsurl={newsurl} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
-      <Route exact path='/News' children={<News nurl={nurl} />} />
+      <Route exact path='/dash' children={<Dash getNews={getNews} futbol={futbol} getSportData={getSportData} logout={logOut} uid={uid} uname={uname} newsurl={newsurl} news={newsPage} newsfeed={newsfeed} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
+      <Route exact path='/News' children={<News getNews={getNews} nurl={nurl} />} />
       <Route exact path='/Photos' children={<Photos uid={uid}/>} />
       <Route exact path='/Sport' children={<Sport futbol={futbol} getSportData={getSportData} />} />
       <Route exact path='/Tasks' children={<Tasks uid={uid}/>} />

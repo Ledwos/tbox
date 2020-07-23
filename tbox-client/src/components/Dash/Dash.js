@@ -12,7 +12,7 @@ function Dash(props) {
 
     useEffect(() => {
         userLoc();
-        getNews();
+        props.getNews();
         getClothes();
         props.getSportData('Milan');
     }, []);
@@ -55,16 +55,16 @@ function Dash(props) {
   };
 
     // news fetch
-    const getNews = () => {
-        fetch('/api/news')
-        .then(response => response.text())
-        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-        .then(data => {
-            let first = data.querySelector('item');
-            setNewsfeed(first);
-            // console.log(first);
-        })
-    };
+    // const getNews = () => {
+    //     fetch('/api/news')
+    //     .then(response => response.text())
+    //     .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    //     .then(data => {
+    //         let first = data.querySelector('item');
+    //         setNewsfeed(first);
+    //         // console.log(first);
+    //     })
+    // };
 
     const newslink = () => {
         let url = newsfeed.querySelector('link').innerHTML;
@@ -178,13 +178,13 @@ function Dash(props) {
                         </table>
                     </div>
                 </div>
-                <div className='previewDiv' onClick={newslink}>
+                <div className='previewDiv' onClick={props.news}>
                     <div className='previewHead'>
                         <p>News</p>
                     </div>
                     <div className='previewBody'>
-                        <h4 id='newsHeading'>{newsfeed ? newsfeed.querySelector('title').innerHTML.trim().replace(/^(\/\/\s*)?<!\[CDATA\[|(\/\/\s*)?\]\]>$/g, '') : null}</h4>
-                        <p id='newsDesc'>{newsfeed ? newsfeed.querySelector('description').innerHTML.trim().replace(/^(\/\/\s*)?<!\[CDATA\[|(\/\/\s*)?\]\]>$/g, '') : null}</p>
+                        <h4 id='newsHeading'>{props.newsfeed ? props.newsfeed.querySelector('title').innerHTML.trim().replace(/^(\/\/\s*)?<!\[CDATA\[|(\/\/\s*)?\]\]>$/g, '') : null}</h4>
+                        <p id='newsDesc'>{props.newsfeed ? props.newsfeed.querySelector('description').innerHTML.trim().replace(/^(\/\/\s*)?<!\[CDATA\[|(\/\/\s*)?\]\]>$/g, '') : null}</p>
                     </div>
                 </div>
                 <div className='previewDiv' onClick={props.sport}>
