@@ -69,7 +69,8 @@ app.post('/db/signup', (req,res) => {
                 u_email: `${email}`,
                 u_pass: `${pass}`
             })
-            .then(res.send(`${name} added!`));
+            .returning('u_id')
+            .then(newId => res.json({'newUser': `${newId}`}));
         } else {
             res.status(409).send({'error': 'email already used'});
         };

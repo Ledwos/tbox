@@ -56,19 +56,6 @@ const Photos = (props) => {
         };
     };
 
-    const delPhoto = (e) => {
-        let pid = e.target.id;
-        console.log(pid);
-        fetch(`/db/photos/del/${pid}`)
-        .then(response => {
-            if (response.status === 200) {
-                document.getElementById(pid).remove();
-            } else if (response.status === 500) {
-                console.log(response.body.error);
-            };
-        });
-    };
-
     // post to db
     const postPhoto = (imgString) => {
         let img = imgString;
@@ -99,6 +86,21 @@ const Photos = (props) => {
             console.log('nothing to upload');
         }
     };
+
+    // delete photo
+    const delPhoto = (e) => {
+        let pid = e.target.id;
+        console.log(pid);
+        fetch(`/db/photos/del/${pid}`)
+        .then(response => {
+            if (response.status === 200) {
+                document.getElementById(pid).remove();
+            } else if (response.status === 500) {
+                console.log(response.body.error);
+            };
+        });
+    };
+
 
 
     return (

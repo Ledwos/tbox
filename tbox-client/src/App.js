@@ -101,7 +101,6 @@ function App() {
     })
     .then(data => {
       if (resStatus === 200) {
-        console.log(data);
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('uId', data.uid);
         localStorage.setItem('uName', data.name);

@@ -19,8 +19,10 @@ const Tasks = (props) => {
         fetch(`db/tasks/${props.uid}`)
         .then(res => res.json())
         .then(data => {
-            data = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id));
-            settasks(data);
+            if (data.length > 0) {
+                data = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id));
+                settasks(data);
+            }
         });
     };
 

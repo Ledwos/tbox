@@ -80,9 +80,11 @@ function Dash(props) {
         fetch(`db/tasks/${props.uid}`)
         .then(res => res.json())
         .then(data => {
-            data = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id));
-            let top3 = data.filter(item => item.t_id < 4);
-            setTasks(top3);
+            if (data.length > 0) {
+                data = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id));
+                let top3 = data.filter(item => item.t_id < 4);
+                setTasks(top3);
+            }
         });
     };
 
@@ -185,9 +187,13 @@ function Dash(props) {
                         <p>Photos</p>
                     </div>
                     <div className='previewBody'>
-                        {photos.length  > 1 ? [
-                            <img src={photos[0].p_img} alt='topPhoto'></img>
-                        ]:null}
+                    {photos.length > 0 ? [
+                    photos.map(photo => (
+                        <div key={photo.p_id} id={photo.p_id}>
+                        <img src={`${photo.p_img}`} alt='photo'/>
+                        </div>
+                    ))
+                ] : <p>No photos found</p>}
                     </div>
                 </div>
                 <div className='previewDiv' onClick={props.tasks}>
