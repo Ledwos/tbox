@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#sportComp {
+    text-align: center;
+}
+
+#pageTitle {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    font-size: 60px;
+    color: white;
+    cursor: pointer;
+}
+
+#teamInputDiv {
+    display: inline-block;
+    text-align: center;
+    min-width: 350px;
+    width: 25%;
+    margin-top: 10%;
+}
+
+#teamInput {
+    width: 100%;
+    color: white;
+    background: none;
+    text-align: center;
+    font-size: 40px;
+    border: none;
+}
+
+#inputLine {
+    border: 2px solid white;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+}
+
+#sportOutput {
+    width: 80%;
+    display: inline-block;
+    position: relative;
+}
+
+.matchDiv {
+    display: flex;
+    margin-top: 15px;
+    width: 25%;
+    font-size: 25px;
+    color: white;
+    justify-content: space-between;
+}

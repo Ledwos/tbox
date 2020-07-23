@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Sport.css';
 
 const Sport = (props) => {
     const [futbol, setfutbol] = useState([]);
@@ -11,39 +12,30 @@ const Sport = (props) => {
         setfutbol(props.futbol);
     }, [props.futbol])
 
-    // // get data
-    // const getData = (teamName) => {
-    //     // let team = teamName
-    //     fetch(`api/sports/${teamName}`)
-    //     .then(response => {
-    //         if (response.status === 200) {
-    //             response.json()
-    //             .then(data => props.setFutbol(data));
-    //         } else if (response.status === 404) {
-    //             console.log('no team with that name');
-    //         };
-    //     });
-    // };
-
     // update futbol 
     const handleChange = (e) => {
         let value = document.querySelector('#teamInput').value;
         props.getSportData(value);
-        console.log(value);
+        // console.log(value);
     };
 
     return (
-        <div>
-           <p>I'm the sport comp</p>
-           <input type='text' placeholder='Enter team e.g. Milan' onChange={handleChange} id='teamInput'></input> 
-           {futbol.length > 0 ? [
-               futbol.map(game => (
-                   <div className='matchDiv'>
-                       <p>{game.team}</p>
-                       <p>{game.score}</p>
-                   </div>
-               ))
-           ] : null} 
+        <div id='sportComp'>
+           <h1 id='pageTitle'>Sport</h1>
+           <div id='teamInputDiv'>
+                <input type='text' placeholder='Input team name' onChange={handleChange} id='teamInput'></input> 
+                <div id='inputLine'></div>
+           </div>
+           <div id='sportOutput'>
+            {futbol.length > 0 ? [
+                futbol.map(game => (
+                    <div className='matchDiv'>
+                        <p>{game.team}</p>
+                        <p>{game.score}</p>
+                    </div>
+                ))
+            ] : null} 
+           </div>
         </div>
     );
 };

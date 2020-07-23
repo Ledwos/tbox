@@ -152,7 +152,7 @@ function App() {
     <Switch>
       <Route exact path='/' children={loggedIn == 'true' ? <Redirect to='/dash' /> : <Home handleLogin={handleLogin} errTxt={errTxt} dashPage={dashPage}/> } />
       <Route exact path='/dash' children={<Dash getNews={getNews} futbol={futbol} getSportData={getSportData} logout={logOut} uid={uid} uname={uname} newsurl={newsurl} news={newsPage} newsfeed={newsfeed} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
-      <Route exact path='/News' children={<News getNews={getNews} nurl={nurl} />} />
+      <Route exact path='/News' children={<News getNews={getNews} nurl={nurl} dashPage={dashPage} />} />
       <Route exact path='/Photos' children={<Photos uid={uid}/>} />
       <Route exact path='/Sport' children={<Sport futbol={futbol} getSportData={getSportData} />} />
       <Route exact path='/Tasks' children={<Tasks uid={uid}/>} />
