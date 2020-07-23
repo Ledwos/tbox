@@ -8,6 +8,7 @@ function Dash(props) {
     const [tasks, setTasks] = useState([]);
     const [sports, setSports] = useState([]);
     const [pieData, setpieData] = useState([]);
+    const [photos, setPhoto] = useState([]);
 
     useEffect(() => {
         userLoc();
@@ -18,6 +19,7 @@ function Dash(props) {
 
     useEffect(() => {
         getTasks();
+        getPhotos();
     }, [props.uid]);
 
     useEffect(() => {
@@ -84,6 +86,13 @@ function Dash(props) {
         });
     };
 
+    // photo fetch
+    const getPhotos = () => {
+        fetch(`/db/photos/fetch/${props.uid}`)
+        .then(response => response.json())
+        .then(info => setPhoto(info));
+    };
+
     // clothes fetch
     const getClothes = () => {
         fetch('/api/clothes')
@@ -135,6 +144,8 @@ function Dash(props) {
     };
 
 
+
+
     return (
         <div>
             <h2 id='dashGreet'>Good day {props.uname}</h2>
@@ -173,7 +184,11 @@ function Dash(props) {
                     <div className='previewHead'>
                         <p>Photos</p>
                     </div>
-                    <div className='previewBody'></div>
+                    <div className='previewBody'>
+                        {photos.length  > 1 ? [
+                            <img src={photos[0].p_img} alt='topPhoto'></img>
+                        ]:null}
+                    </div>
                 </div>
                 <div className='previewDiv' onClick={props.tasks}>
                     <div className='previewHead'>

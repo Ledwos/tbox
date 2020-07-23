@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import addBtn from './Plus_button_small.png';
 import TaskForm from '../TaskForm/TaskForm';
 import fetch from 'node-fetch';
+import './Taskcss.css';
 
 const Tasks = (props) => {
     // const [uid, setuid] = useState('0');
     const [tasks, settasks] = useState([]);
     const [tform, settform] = useState(false);
-    const [tdesc, settdesc] = useState('');
+    // const [tdesc, settdesc] = useState('');
 
     useEffect(() => {
         getTasks();
@@ -84,57 +85,92 @@ const Tasks = (props) => {
     // update task desc
     const updateDesc = (e) => {
         let tid = e.target.id;
-        let tid2 = 'desc' + tid;
-        // console.log(tid2);
+        let tno = tid.slice(4);
         let desc = document.getElementById(tid).innerHTML;
-        settdesc(desc);
+        // settdesc(desc);
 
-
-        // create close button- no bueno
-        // let closeBtn = document.createElement('button')
-        // closeBtn.innerHTML='X'
-        // closeBtn.setAttribute('onClick', 'resDesc');
-        // closeBtn.onClick = resDesc();
-        // closeBtn.addEventListener('onclick', resDesc(), false);
-        // create update button
-        
         // create textbox
         let editBox = document.createElement('textarea');
         editBox.setAttribute('id', `${tid}`);
+        editBox.setAttribute('class', 'updateBox');
         editBox.innerHTML = desc;
-        document.getElementById(tid).innerHTML = '';
+        editBox.addEventListener('keyup', (e) => {setDesc(e, desc)});
+        document.getElementById(tid).remove();
     
-        // put it all together
-        document.getElementById(tid2).appendChild(editBox);
-        // document.getElementById(tid2).appendChild(closeBtn);
+        // prepend textarea to div
+        document.getElementById(`tbody${tno}`).prepend(editBox);
     };
 
     // closeBtn function to restore desc
-    const resDesc = () => {
-        console.log('restore desc!');
+    const setDesc = (e, txt) => {
+        let tid = e.target.id;
+        let tno = tid.slice(4);
+        let newDesc = e.target.value;
+        let ndesc = txt;
+        // console.log(ndesc);
+        let updatedDesc = document.createElement('p');
+        updatedDesc.setAttribute('class', 'taskDesc');
+        updatedDesc.setAttribute('id', `${e.target.id}`);
+        updatedDesc.onclick = (e) => {updateDesc(e)};
+        if (e.keyCode === 13) {
+            // submit on Enter
+            e.preventDefault();
+            console.log('posting!');
+            fetch('/db/desc', {
+                mode: 'cors',
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "tid": tno,
+                    "desc": newDesc,
+                })
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    updatedDesc.innerHTML = newDesc;
+                    document.getElementById(`${e.target.id}`).remove();
+                    document.getElementById(`tbody${tno}`).prepend(updatedDesc);
+                    // getTasks();
+                } else {
+                    console.log(`error: ${response.status}`)
+                }
+            })
+        } else if (e.keyCode === 27) {
+            // return to original on Esc
+            e.preventDefault();
+            console.log(ndesc);
+            updatedDesc.innerHTML = ndesc;
+            document.getElementById(`${e.target.id}`).remove();
+            document.getElementById(`tbody${tno}`).prepend(updatedDesc);
+            // settdesc('');
+        };
     };
 
     return (
-        <div>
+        <div id='taskComp'>
             <p>I'm the task comp. Your id is- {props.uid}</p>
-            <div>
+            <div id='taskDiv'>
                 {tasks.length > 0 ? [
                     tasks.map(task => (
-                    <div key={task.t_id} className='task'>
+                    <div key={`t${task.t_id}`} className='task' id={`task${task.t_id}`}>
                         <div className='taskHeader'>
                             <h4 className='taskTitle'>{task.t_name}</h4>
                         </div>
-                        <div className='taskDesc' id={task.t_id} onClick={updateDesc}>
-                            {task.t_desc}
-                        </div>
-                        <div id={`desc${task.t_id}`}></div>
-                        <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp}></input>
+                            <div id={`tbody${task.t_id}`}>
+                                <p className='taskDesc' id={`desc${task.t_id}`} onClick={(e) => {updateDesc(e)}}>
+                                    {task.t_desc}
+                                </p>
+                                <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp}></input>
+                            </div>
                         <br />
                     </div>
                     ))] : <p>No tasks set</p>
                 }
             </div>
-            {tform  ? <TaskForm toggleTaskForm={toggleTaskForm} addTask={addTask}/> : <img onClick={toggleTaskForm} src={addBtn}></img> }
+            {tform  ? <TaskForm toggleTaskForm={toggleTaskForm} addTask={addTask}/> : <img onClick={toggleTaskForm} src={addBtn} id='formBtn'></img> }
         </div>
     );
 };

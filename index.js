@@ -7,6 +7,7 @@ const csv = require('csv-parser');
 const fs = require('fs');
 
 const dotenv = require('dotenv');
+const Knex = require('knex');
 dotenv.config();
 
 const port = process.env.PORT || 5000;
@@ -140,7 +141,48 @@ app.get('/db/tasks/:uid', (req,res) => {
     });
 });
 
+// upload image
+app.post('/db/photos/upload', (req, res) => {
+    let img = req.body.img;
+    let uid = req.body.uid;
+    pg('p_table')
+    .insert({
+        p_img: `${img}`,
+        p_user: `${uid}`
+    })
+    .then(res.send(`photo uploaded!`))
+    .catch(err => {
+        res.status(500).send({'error': 'could not upload image'});
+        throw err;
+    });
+});
 
+// get images
+app.get('/db/photos/fetch/:uid', (req, res) => {  
+    let uid = req.params.uid;
+    pg('p_table')
+    .where({p_user: `${uid}`})
+    .select('p_img', 'p_id')
+    .then(data => {
+        if (data.length === 0) {
+            res.status(404).send({'error': 'no images found'});
+        } else {
+            res.json(data);
+        }
+    });
+});
+
+// delete image
+app.get('/db/photos/del/:pid', (req, res) => {
+    let pid = req.params.pid;
+    pg('p_table')
+    .where({p_id: `${pid}`})
+    .del()
+    .then(res.send(`photo ${pid} deleted!`))
+    .catch(err => {
+        res.status(500).send({'error': `(${err})could not delete image`})
+    });
+});
 
 // API routes
 

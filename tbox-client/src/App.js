@@ -133,7 +133,7 @@ function App() {
       <Route exact path='/' children={loggedIn == 'true' ? <Redirect to='/dash' /> : <Home handleLogin={handleLogin} errTxt={errTxt} dashPage={dashPage}/> } />
       <Route exact path='/dash' children={<Dash futbol={futbol} getSportData={getSportData} logout={logOut} uid={uid} uname={uname} newsurl={newsurl} news={newsPage} photos={photosPage} sport={sportPage} tasks={tasksPage} />} />
       <Route exact path='/News' children={<News nurl={nurl} />} />
-      <Route exact path='/Photos' children={<Photos />} />
+      <Route exact path='/Photos' children={<Photos uid={uid}/>} />
       <Route exact path='/Sport' children={<Sport futbol={futbol} getSportData={getSportData} />} />
       <Route exact path='/Tasks' children={<Tasks uid={uid}/>} />
     </Switch>

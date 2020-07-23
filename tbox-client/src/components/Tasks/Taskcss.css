@@ -1,0 +1,36 @@
+#taskComp {
+    display: inline-flex;
+    flex-direction: column;
+    border: 2px solid red;
+    width: 100%;
+    align-items: center;
+}
+
+#taskDiv {
+    display: inline-block;
+    width: 80%;
+}
+
+.task {
+    border: 2px solid yellow;
+    border-radius: 5px ;
+}
+
+#formBtn {
+    width: 50px;
+}
+
+.taskDesc {
+    border: 2px solid blue;
+}
+
+.updateBox {
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.tb {
+    display: inline-flex;
+    
+}
