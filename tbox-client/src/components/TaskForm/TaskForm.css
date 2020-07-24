@@ -31,12 +31,14 @@
 }
 
 #taskForm input, textarea {
-    background: none;
+    /* background: none; */
+    background-color: rgba(122, 122, 122, 0.5);
     margin-top: 10px;
     line-height: 20px;
     font-size: 16px;
     color: white;
     border: none;
+    min-height: 40px;
 }
 
 #addTaskBtn {
@@ -45,6 +47,7 @@
     border-radius: 15px;
     border: 2px solid rgb(255, 230, 94);
     cursor: pointer;
+    margin-top: 20px;
 }
 
 #addTaskBtn:hover {

@@ -88,16 +88,16 @@ const Tasks = (props) => {
     const updateDesc = (e) => {
         let tid = e.target.id;
         let tno = tid.slice(4);
-        let desc = document.getElementById(tid).innerHTML;
+        let desc = document.getElementById(`desc${tno}`).innerHTML;
         // settdesc(desc);
 
         // create textbox
         let editBox = document.createElement('textarea');
-        editBox.setAttribute('id', `${tid}`);
+        editBox.setAttribute('id', `desc${tno}`);
         editBox.setAttribute('class', 'updateBox');
         editBox.innerHTML = desc;
         editBox.addEventListener('keyup', (e) => {setDesc(e, desc)});
-        document.getElementById(tid).remove();
+        document.getElementById(`desc${tno}`).remove();
     
         // prepend textarea to div
         document.getElementById(`tbody${tno}`).prepend(editBox);
@@ -160,7 +160,7 @@ const Tasks = (props) => {
                     <div key={`t${task.t_id}`} className='task' id={`task${task.t_id}`}>
                         <div className='taskText'>
                         <div className='taskHeader'>
-                            <h4 className='taskTitle'>{task.t_name}</h4>
+                            <h4 className='taskTitle' id={`titl${task.t_id}`} onClick={(e) => {updateDesc(e)}}>{task.t_name}</h4>
                         </div>
                             <div id={`tbody${task.t_id}`}>
                                 <p className='taskDesc' id={`desc${task.t_id}`} onClick={(e) => {updateDesc(e)}}>
