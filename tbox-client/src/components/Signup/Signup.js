@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import fetch from 'node-fetch';
+import './Signup.css';
 
 const Signup = (props) => {
     const [emErr, setemErr] = useState(false);
@@ -52,34 +53,41 @@ const Signup = (props) => {
     };
 
     const prepFile = () => {
-        let file = document.getElementById('signupImg').files[0];
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = (e) => {
-            let img = new Image();
-            img.src = e.target.result;
-            img.onload = (ev) => {
-                let canvas = document.createElement('canvas');
-                canvas.width = 280;
-                canvas.height = 280;
-                let ctx = canvas.getContext('2d');
-                // rescale photo while retaining aspect ratio
-                if (img.width > img.height || img.width == img.height) {
-                    let ratio = img.width / 280;
-                    let newWidth = 280;
-                    let newHeight = img.height / ratio
-                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
-                } else if (img.width < img.height) {
-                    let ratio = img.height / 280;
-                    let newWidth = img.width / ratio;
-                    let newHeight = 280;
-                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        if (document.getElementById('signupImg').files[0]) {
+            let file = document.getElementById('signupImg').files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = (e) => {
+                let img = new Image();
+                img.src = e.target.result;
+                img.onload = (ev) => {
+                    let canvas = document.createElement('canvas');
+                    canvas.width = 280;
+                    canvas.height = 280;
+                    let ctx = canvas.getContext('2d');
+                    // rescale photo while retaining aspect ratio
+                    if (img.width > img.height || img.width == img.height) {
+                        let ratio = img.width / 280;
+                        let newWidth = 280;
+                        let newHeight = img.height / ratio
+                        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                    } else if (img.width < img.height) {
+                        let ratio = img.height / 280;
+                        let newWidth = img.width / ratio;
+                        let newHeight = 280;
+                        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                    };
+                    // convert image to base64
+                    let data = canvas.toDataURL()
+                    setimgString(data);
+                    // preview image in signup form
+                    let imgPreview = new Image(140, 140);
+                    imgPreview.src = data;
+                    document.getElementById('signupImgLabel').innerHTML = '';
+                    document.getElementById('signupImgLabel').appendChild(imgPreview);
                 };
-                // convert image to base64
-                let data = canvas.toDataURL()
-                setimgString(data);
             };
-        };
+        }
     };
 
     // post to db
@@ -116,29 +124,36 @@ const Signup = (props) => {
 
 
     return (
-        <div>
-             <form id='signupForm' onSubmit={handleSignup} method='POST'>
-                <input type='text' id='username'  placeholder='First Name' required></input>
-                <input type='text' 
-                        id='email'
-                        placeholder='Email'
-                        pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
-                        required></input>
-                {emErr ? <p>email already exists</p> : null}
-                <input type='password' 
-                       id='pass'
-                       placeholder='Password' 
-                       required ></input>
-                <input type='password' 
-                       id='pass2' 
-                       placeholder='Confirm Password' 
-                       required ></input>
-                {passErr ? <p>Passwords must match</p> : null}
-                <button type='submit' id='signupBtn'>Sign Up</button>
-            </form>
-            <label htmlFor='signupImg'>Add a photo</label>
-            <input type='file' id='signupImg' onChange={prepFile}></input>
-            <p>Already have an account? <span onClick={props.toggleForm}>Click Here</span> to log in.</p>
+        <div id='signupComp'>
+            <div id='signupDiv'>
+                <h1 id='signupTitle' >Hackathon</h1>
+                <form id='signupForm' onSubmit={handleSignup} method='POST'>
+                    <div class='signupTextInput'>
+                        <input type='text' id='username'  placeholder='Username' required></input>
+                        <input type='text' 
+                                id='email'
+                                placeholder='Email'
+                                pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
+                                required></input>
+                        {emErr ? <p>email already exists</p> : null}
+                    </div>
+                    <div class='signupTextInput'>
+                        <input type='password' 
+                            id='pass'
+                            placeholder='Password' 
+                            required ></input>
+                        <input type='password' 
+                            id='pass2' 
+                            placeholder='Confirm Password' 
+                            required ></input>
+                        {passErr ? <p>Passwords must match</p> : null}
+                    </div>
+                    <label id='signupImgLabel' htmlFor='signupImg'>Add picture</label>
+                    <input type='file' id='signupImg' onChange={prepFile}></input>
+                    <button type='submit' id='signupBtn'>Register</button>
+                </form>
+                <p id='loginText' >Already have an account? <span onClick={props.toggleForm}>Click Here</span> to log in.</p>
+            </div>
         </div>
     );
 };

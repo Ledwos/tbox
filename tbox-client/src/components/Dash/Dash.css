@@ -22,7 +22,7 @@
 }
 
 #logoutBtn {
-    width: 110px;
+    width: 130px;
     height: 30px;
     border-radius: 15px;
     border: 2px solid rgb(255, 230, 94);;
@@ -133,28 +133,28 @@
 
 /* Tasks */
 
-#taskMain {
+#dashtaskMain {
     padding-top: 5px;
     height: 65%;
 }
 
-.taskDiv {
+.dashtaskDiv {
     display: inline-flex;
     width: 90%;
     height: 25%;
     margin-top: 5px;
 }
 
-.taskHeader {
+.dashtaskHeader {
     width: 80%;
     text-align: left;
 }
 
-.taskLine {
+.dashtaskLine {
     border: 1px solid black;
 }
 
-.taskCheckbox {
+.dashtaskCheckbox {
     font-size: 20px;
 }
 

@@ -63,11 +63,11 @@
     font-size: 14px;
 }
 
-.checkLabel input {
+.taskcheckLabel input {
     opacity: 0%;
 }
 
-.checkLabel {
+.taskcheckLabel {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -80,7 +80,7 @@
     user-select: none;
 }
 
-.checkMark {
+.taskcheckMark {
     position: absolute;
     right: -20px;
     height: 40px;
@@ -90,7 +90,7 @@
     border-radius: 5px;
 }
 
-.checkMark:after {
+.taskcheckMark:after {
     content: "";
     position: absolute;
     display: none;
@@ -100,11 +100,11 @@
     background-color: #2196F3;
   } */
 
-.checkLabel input:checked ~ .checkMark:after {
+.taskcheckLabel input:checked ~ .taskcheckMark:after {
     display: block;
 }
 
-.checkLabel .checkMark:after {
+.taskcheckLabel .checkMark:after {
     right: 0px;
     top: -20px;
     width: 15px;

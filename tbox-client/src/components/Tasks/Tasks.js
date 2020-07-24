@@ -153,7 +153,7 @@ const Tasks = (props) => {
 
     return (
         <div id='taskComp'>
-            <h1 id='pageTitle' onclick={props.dashPage} >Tasks</h1>
+            <h1 id='pageTitle' onClick={props.dashPage} >Tasks</h1>
             <div id='taskDiv'>
                 {tasks.length > 0 ? [
                     tasks.map(task => (
@@ -169,9 +169,9 @@ const Tasks = (props) => {
                             </div>
                             <div className='taskLine' ></div>
                         </div>
-                        <label className='checkLabel'>
-                            <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp} class='taskCheckbox'></input>
-                            <span class='checkMark'></span>
+                        <label className='taskcheckLabel'>
+                            <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp} ></input>
+                            <span class='taskcheckMark'></span>
                         </label>
                     </div>
                     ))] : <p>No tasks set</p>

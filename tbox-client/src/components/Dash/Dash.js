@@ -201,13 +201,13 @@ function Dash(props) {
                     <div className='previewHead'>
                         <p>Tasks</p>
                     </div>
-                    <div className='previewBody' id='taskMain'>
+                    <div className='previewBody' id='dashtaskMain'>
                         {tasks.length > 0 ? [
                         tasks.map(task => (
-                        <div key={task.t_id} className='taskDiv'>
-                            <div className='taskHeader' key={task.t_id}>
-                                <p className='taskTitle'>{task.t_name}</p>
-                                <div className='taskLine'></div>
+                        <div key={task.t_id} className='dashtaskDiv'>
+                            <div className='dashtaskHeader' key={task.t_id}>
+                                <p className='dashtaskTitle'>{task.t_name}</p>
+                                <div className='dashtaskLine'></div>
                             </div>
                                 <label className='checkLabel'>
                                     <input type='checkbox' defaultChecked={task.t_comp} class='taskCheckbox'></input>
