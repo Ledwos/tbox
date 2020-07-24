@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 function Dash(props) {
     const [weather, setWeather] = useState(null);
     // const [newsfeed, setNewsfeed] = useState(null);
-    const [tasks, setTasks] = useState([]);
+    const [dashtasks, setdashTasks] = useState([]);
     const [sports, setSports] = useState([]);
     const [pieData, setpieData] = useState([]);
     const [photos, setPhoto] = useState([]);
@@ -55,15 +55,13 @@ function Dash(props) {
   };
 
     // task fetch
-    const getTasks = async () => {
-        let user = await props.uid;
-        fetch(`db/tasks/${user}`)
+    const getTasks = () => {
+        fetch(`db/tasks/${props.uid}`)
         .then(res => res.json())
         .then(data => {
             if (data.length > 0) {
-                data = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id));
-                let top3 = data.filter(item => item.t_id < 4);
-                setTasks(top3);
+                let odata = data.sort((a, b) => parseFloat(a.t_id) - parseFloat(b.t_id))
+                setdashTasks(odata.splice(0,3));
             }
         });
     };
@@ -203,8 +201,8 @@ function Dash(props) {
                         <p>Tasks</p>
                     </div>
                     <div className='previewBody' id='dashtaskMain'>
-                        {tasks.length > 0 ? [
-                        tasks.map(task => (
+                        {dashtasks.length > 0 ? [
+                        dashtasks.map(task => (
                         <div key={`t${task.t_id}`} className='dashtaskDiv'>
                             <div className='dashtaskHeader' key={task.t_id}>
                                 <p className='dashtaskTitle'>{task.t_name}</p>

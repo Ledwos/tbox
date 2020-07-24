@@ -130,6 +130,7 @@ app.post('/db/comp', (req,res) => {
 // get tasks
 app.get('/db/tasks/:uid', (req,res) => {
     let uid = req.params.uid;
+    console.log(`Tasks-${uid}`);
     pg('t_table')
     .where({t_user: `${uid}`})
     .select('t_name', 't_desc', 't_id', 't_comp')
