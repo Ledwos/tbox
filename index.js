@@ -271,6 +271,16 @@ app.get('/test', (req, res) => {
     res.send(`dash home, ${process.env.TEST_VAR || 'env file not here, nice!'}`);
 });
 
+// catchall
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'tbox-client/build/index.html'));
+    (err) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+    };
+});
+
 app.listen(port, () => {
     console.log(`Live on port: ${port}`)
 });

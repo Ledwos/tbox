@@ -171,7 +171,7 @@ const Tasks = (props) => {
                         </div>
                         <label className='taskcheckLabel'>
                             <input type='checkbox' onClick={compTask} id={task.t_id} defaultChecked={task.t_comp} ></input>
-                            <span class='taskcheckMark'></span>
+                            <span class='checkMark'></span>
                         </label>
                     </div>
                     ))] : <p>No tasks set</p>
