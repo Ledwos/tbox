@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 
 function Dash(props) {
     const [weather, setWeather] = useState(null);
-    const [newsfeed, setNewsfeed] = useState(null);
+    // const [newsfeed, setNewsfeed] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [sports, setSports] = useState([]);
     const [pieData, setpieData] = useState([]);
@@ -55,8 +55,9 @@ function Dash(props) {
   };
 
     // task fetch
-    const getTasks = () => {
-        fetch(`db/tasks/${props.uid}`)
+    const getTasks = async () => {
+        let user = await props.uid;
+        fetch(`db/tasks/${user}`)
         .then(res => res.json())
         .then(data => {
             if (data.length > 0) {
@@ -204,7 +205,7 @@ function Dash(props) {
                     <div className='previewBody' id='dashtaskMain'>
                         {tasks.length > 0 ? [
                         tasks.map(task => (
-                        <div key={task.t_id} className='dashtaskDiv'>
+                        <div key={`t${task.t_id}`} className='dashtaskDiv'>
                             <div className='dashtaskHeader' key={task.t_id}>
                                 <p className='dashtaskTitle'>{task.t_name}</p>
                                 <div className='dashtaskLine'></div>

@@ -11,7 +11,7 @@ const Login = (props) => {
                         <input 
                             type='text' 
                             id='u_email' 
-                            placeholder='Username'
+                            placeholder='Email'
                             pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
                             required
                             ></input>
