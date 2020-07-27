@@ -11,7 +11,7 @@
     color: white;
     font-size: 60px;
     margin-top: 20px;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 #photoBoard {
@@ -73,4 +73,20 @@ input[type='file'] {
 #plusPreview {
     height: 100px;
     padding-top: 25%;
+}
+
+#toDashBtn {
+    width: 130px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(255, 230, 94);;
+    background-color: rgb(255, 230, 94);
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#toDashBtn:hover {
+    background-color: rgb(255, 255, 255);
 }

@@ -16,7 +16,7 @@
     top: 10px;
     font-size: 60px;
     color: white;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 #taskDiv {
@@ -114,4 +114,20 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+#toDashBtn {
+    width: 130px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(255, 230, 94);;
+    background-color: rgb(255, 230, 94);
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#toDashBtn:hover {
+    background-color: rgb(255, 255, 255);
 }

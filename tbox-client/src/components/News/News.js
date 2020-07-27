@@ -37,7 +37,8 @@ const News = (props) => {
     return (
         <div id='newsComp'>
           <div id='newsHead'>
-            <h1 id='pageTitle' onClick={props.dashPage}>News</h1>
+            <h1 id='pageTitle'>News</h1>
+            <button onClick={props.dashPage} id='toDashBtn'>Dashboard</button>
             <img id='newsImg' src={article ? article.querySelector('.js-image-replace').src : null} alt='article image'></img>
         </div>
             <h4 id='newsTitle'>{article ? article.querySelector('.story-body__h1').innerHTML : null}</h4>   

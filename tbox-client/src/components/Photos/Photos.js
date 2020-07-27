@@ -106,7 +106,8 @@ const Photos = (props) => {
 
     return (
         <div id='photoComp' >
-            <h1 id='photosTitle' onClick={props.dashPage} >Photos</h1>
+            <h1 id='photosTitle'>Photos</h1>
+            <button onClick={props.dashPage} id='toDashBtn'>Dashboard</button>
             <div id='photoBoard' >
                 <div id='fileDiv'>
                     <label htmlFor='inputPhoto' id='customUpload'>

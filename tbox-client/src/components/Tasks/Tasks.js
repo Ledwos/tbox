@@ -153,7 +153,8 @@ const Tasks = (props) => {
 
     return (
         <div id='taskComp'>
-            <h1 id='pageTitle' onClick={props.dashPage} >Tasks</h1>
+            <h1 id='pageTitle'>Tasks</h1>
+            <button onClick={props.dashPage} id='toDashBtn'>Dashboard</button>
             <div id='taskDiv'>
                 {tasks.length > 0 ? [
                     tasks.map(task => (
